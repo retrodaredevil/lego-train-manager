@@ -1,3 +1,2 @@
-wheel
-bleak
-pylgbst==1.2.2
+curio
+bricknil
