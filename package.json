@@ -1,0 +1,23 @@
+{
+  "name": "lego-train-manager",
+  "version": "1.0.0",
+  "description": "Manages Lego trains using Powered Up",
+  "main": "dist/node/index.js",
+  "scripts": {
+    "build": "tsc --build",
+    "clean": "tsc --build --clean",
+    "run": "tsc --build && node dist/node/index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "retrodaredevil",
+  "license": "Apache-2.0",
+  "dependencies": {
+    "noble": "^1.9.1",
+    "node-poweredup": "^8.0.5",
+    "semaphore": "^1.1.0"
+  },
+  "devDependencies": {
+    "@types/semaphore": "^1.1.1",
+    "typescript": "^4.9.4"
+  }
+}
