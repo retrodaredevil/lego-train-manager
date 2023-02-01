@@ -5,7 +5,7 @@ from bricknil import attach
 from bricknil.const import Color
 from bricknil.hub import PoweredUpHub, PoweredUpRemote
 from bricknil.sensor import TrainMotor, LED, Light, RemoteButtons, Button
-from bricknil.sensor.motor import CPlusLargeMotor
+from bricknil.sensor.motor import CPlusLargeMotor, ExternalMotor
 from curio import sleep
 
 from trainmanager.managedtrain import ManagedTrain, StopType, LightLevel
@@ -143,6 +143,7 @@ class GreenTrain(PoweredUpHub, ManagedTrain):
                 current_color = desired_color
 
             if self.__update_light_level:
+                self.__update_light_level = False
                 level = self.__light_level
                 if level is LightLevel.OFF:
                     brightness = 0
@@ -150,6 +151,7 @@ class GreenTrain(PoweredUpHub, ManagedTrain):
                     brightness = 30
                 else:
                     brightness = 100
+                print(f"Brightness now: {brightness}")
                 await self.train_light.set_brightness(brightness)
             new_velocity, is_updated_velocity = self.speed_handler.update()
             if is_updated_velocity:
@@ -158,14 +160,14 @@ class GreenTrain(PoweredUpHub, ManagedTrain):
             await sleep(0.1)
 
 
-@attach(CPlusLargeMotor, name='motor')
+@attach(ExternalMotor, name='motor')
 @attach(LED, name='hub_led')
 class CrocodileTrain(PoweredUpHub, ManagedTrain):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, *kwargs)
         self.speed_handler = LinearSpeedHandler(1.0/4.0, time.time)
-        self.motor: Optional[CPlusLargeMotor] = None
+        self.motor: Optional[ExternalMotor] = None
         self.hub_led: Optional[LED] = None
 
     @property
